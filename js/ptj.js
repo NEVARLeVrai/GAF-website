@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', handleThemeOnScroll);
 
 /* Nouveau Swiper avec configuration distincte */
 let newSwiper = new Swiper(".new-swiper-container", {
-  cssMode: true,
+  cssMode: false,
   loop: false,
   navigation: {
     nextEl: '.new-swiper-button-next',
@@ -240,7 +240,8 @@ let newSwiper = new Swiper(".new-swiper-container", {
   observer: true,
   observeParents: true,
   resizeObserver: true,
-  updateOnWindowResize: true
+  updateOnWindowResize: true,
+  preventInteractionOnTransition: true
 });
 
 // Mise à jour du nouveau Swiper lors du redimensionnement
@@ -277,6 +278,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 0);
         });
     });
+
+    // Fix bug cssMode: debounce sur les boutons de navigation
+    let isNavigating = false;
+    const navDelay = 400; // ms - correspond au speed du swiper
+
+    const prevBtn = document.querySelector('.new-swiper-button-prev');
+    const nextBtn = document.querySelector('.new-swiper-button-next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+            if (isNavigating) {
+                e.stopImmediatePropagation();
+                return;
+            }
+            isNavigating = true;
+            setTimeout(() => { isNavigating = false; }, navDelay);
+        }, true);
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            if (isNavigating) {
+                e.stopImmediatePropagation();
+                return;
+            }
+            isNavigating = true;
+            setTimeout(() => { isNavigating = false; }, navDelay);
+        }, true);
+    }
 
     // S'assurer que l'image se charge à chaque changement de slide
     newSwiper.on('slideChange', function () {
