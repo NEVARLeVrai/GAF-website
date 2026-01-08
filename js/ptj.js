@@ -280,21 +280,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Variable pour tracker l'index attendu (fix cssMode bug)
     let expectedIndex = 0;
+    let isNavigatingBack = false;
+
+    // Intercepter le clic sur le bouton prev
+    const prevButton = document.querySelector('.new-swiper-button-prev');
+    if (prevButton) {
+        prevButton.addEventListener('click', function() {
+            isNavigatingBack = true;
+            expectedIndex = Math.max(0, newSwiper.activeIndex - 1);
+        });
+    }
 
     // S'assurer que l'image se charge à chaque changement de slide
     newSwiper.on('slideChange', function () {
-        expectedIndex = newSwiper.activeIndex;
         const currentIndex = newSwiper.activeIndex;
+        if (!isNavigatingBack) {
+            expectedIndex = currentIndex;
+        }
         setTimeout(() => {
             modalImages[currentIndex].src = modalImages[currentIndex].dataset.fullsize;
         }, 0);
     });
 
-    // Corriger la position si désynchronisée après la transition (fix cssMode bug)
+    // Corriger la position si désynchronisée après navigation arrière
     newSwiper.on('slideChangeTransitionEnd', function () {
-        if (newSwiper.activeIndex !== expectedIndex) {
-            newSwiper.slideTo(expectedIndex, 100);
+        if (isNavigatingBack && newSwiper.activeIndex !== expectedIndex) {
+            newSwiper.slideTo(expectedIndex, 150);
         }
+        isNavigatingBack = false;
     });
 
     // Fermer le modal
