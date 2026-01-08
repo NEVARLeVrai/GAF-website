@@ -240,7 +240,8 @@ let newSwiper = new Swiper(".new-swiper-container", {
   observer: true,
   observeParents: true,
   resizeObserver: true,
-  updateOnWindowResize: true
+  updateOnWindowResize: true,
+  preventInteractionOnTransition: true
 });
 
 // Mise à jour du nouveau Swiper lors du redimensionnement
@@ -284,16 +285,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // S'assurer que l'image se charge à chaque changement de slide
     newSwiper.on('slideChange', function () {
         const currentIndex = newSwiper.activeIndex;
-        console.log('slideChange - lastIndex:', lastIndex, 'currentIndex:', currentIndex);
         setTimeout(() => {
             modalImages[currentIndex].src = modalImages[currentIndex].dataset.fullsize;
         }, 0);
         lastIndex = currentIndex;
-    });
-
-    // Vérifier après chaque transition si on est au bon endroit
-    newSwiper.on('slideChangeTransitionEnd', function () {
-        console.log('transitionEnd - activeIndex:', newSwiper.activeIndex, 'lastIndex:', lastIndex);
     });
 
     // Fermer le modal
