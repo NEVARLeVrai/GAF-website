@@ -278,36 +278,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Variable pour tracker l'index attendu (fix cssMode bug)
-    let expectedIndex = 0;
-    let isNavigatingBack = false;
-
-    // Intercepter le clic sur le bouton prev
-    const prevButton = document.querySelector('.new-swiper-button-prev');
-    if (prevButton) {
-        prevButton.addEventListener('click', function() {
-            isNavigatingBack = true;
-            expectedIndex = Math.max(0, newSwiper.activeIndex - 1);
-        });
-    }
+    // Variable pour tracker l'index (fix cssMode bug)
+    let lastIndex = 0;
 
     // S'assurer que l'image se charge à chaque changement de slide
     newSwiper.on('slideChange', function () {
         const currentIndex = newSwiper.activeIndex;
-        if (!isNavigatingBack) {
-            expectedIndex = currentIndex;
-        }
+        console.log('slideChange - lastIndex:', lastIndex, 'currentIndex:', currentIndex);
         setTimeout(() => {
             modalImages[currentIndex].src = modalImages[currentIndex].dataset.fullsize;
         }, 0);
+        lastIndex = currentIndex;
     });
 
-    // Corriger la position si désynchronisée après navigation arrière
+    // Vérifier après chaque transition si on est au bon endroit
     newSwiper.on('slideChangeTransitionEnd', function () {
-        if (isNavigatingBack && newSwiper.activeIndex !== expectedIndex) {
-            newSwiper.slideTo(expectedIndex, 150);
-        }
-        isNavigatingBack = false;
+        console.log('transitionEnd - activeIndex:', newSwiper.activeIndex, 'lastIndex:', lastIndex);
     });
 
     // Fermer le modal
