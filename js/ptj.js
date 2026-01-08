@@ -283,10 +283,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentIndex = newSwiper.activeIndex;
         setTimeout(() => {
             modalImages[currentIndex].src = modalImages[currentIndex].dataset.fullsize;
-            // Force la mise à jour de la position pour éviter le bug avec cssMode
-            newSwiper.update();
-            newSwiper.slideTo(currentIndex, 0, false);
         }, 0);
+    });
+
+    // Force la mise à jour après la transition pour éviter le bug avec cssMode
+    newSwiper.on('slideChangeTransitionEnd', function () {
+        newSwiper.update();
     });
 
     // Fermer le modal
