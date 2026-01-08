@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Force la mise à jour de la position pour éviter le bug avec cssMode
             newSwiper.update();
             newSwiper.slideTo(currentIndex, 0, false);
-        }, 10);
+        }, 0);
     });
 
     // Fermer le modal
