@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', handleThemeOnScroll);
 
 /* Nouveau Swiper avec configuration distincte */
 let newSwiper = new Swiper(".new-swiper-container", {
-  cssMode: true,
+  cssMode: false,
   loop: false,
   navigation: {
     nextEl: '.new-swiper-button-next',
