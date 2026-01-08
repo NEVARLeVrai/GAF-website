@@ -278,17 +278,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Variable pour tracker l'index attendu (fix cssMode bug)
+    let expectedIndex = 0;
+
     // S'assurer que l'image se charge à chaque changement de slide
     newSwiper.on('slideChange', function () {
+        expectedIndex = newSwiper.activeIndex;
         const currentIndex = newSwiper.activeIndex;
         setTimeout(() => {
             modalImages[currentIndex].src = modalImages[currentIndex].dataset.fullsize;
         }, 0);
     });
 
-    // Force la mise à jour après la transition pour éviter le bug avec cssMode
+    // Corriger la position si désynchronisée après la transition (fix cssMode bug)
     newSwiper.on('slideChangeTransitionEnd', function () {
-        newSwiper.update();
+        if (newSwiper.activeIndex !== expectedIndex) {
+            newSwiper.slideTo(expectedIndex, 100);
+        }
     });
 
     // Fermer le modal
