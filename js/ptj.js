@@ -279,8 +279,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Variable pour tracker l'index (fix cssMode bug)
-    let lastIndex = 0;
+    // Fix bug cssMode: debounce sur les boutons de navigation
+    let isNavigating = false;
+    const navDelay = 400; // ms - correspond au speed du swiper
+
+    const prevBtn = document.querySelector('.new-swiper-button-prev');
+    const nextBtn = document.querySelector('.new-swiper-button-next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+            if (isNavigating) {
+                e.stopImmediatePropagation();
+                return;
+            }
+            isNavigating = true;
+            setTimeout(() => { isNavigating = false; }, navDelay);
+        }, true);
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+            if (isNavigating) {
+                e.stopImmediatePropagation();
+                return;
+            }
+            isNavigating = true;
+            setTimeout(() => { isNavigating = false; }, navDelay);
+        }, true);
+    }
 
     // S'assurer que l'image se charge à chaque changement de slide
     newSwiper.on('slideChange', function () {
@@ -288,7 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             modalImages[currentIndex].src = modalImages[currentIndex].dataset.fullsize;
         }, 0);
-        lastIndex = currentIndex;
     });
 
     // Fermer le modal
