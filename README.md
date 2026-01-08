@@ -43,6 +43,6 @@ Game Asset Factory is a professional game art studio platform that showcases our
 
 ## License
 
-See the [LICENSE](LICENSE) file for details.
+This project is open-source under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-**Important:** The design, layout, visual representation, and original images are the exclusive property of GameAssetFactory. Some portions of the underlying codebase are open-source and remain the property of their respective authors.
+**Important:** The design, layout, visual representation, and original images are the exclusive property of GameAssetFactory and are **NOT** covered by the MIT license. Some portions of the underlying codebase are open-source and remain the property of their respective authors.

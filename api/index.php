@@ -172,7 +172,7 @@
   <!--================== Footer ===============-->
   <footer class="footer">
     <div class="footer__bg">
-      <div class="footer__container container grid" data-nosnippet>
+      <div class="footer__container container grid">
         <div class="footer__content">
           <h3 class="footer__title">GameAssetFactory</h3>
           <p class="footer__description">
@@ -211,7 +211,7 @@
         </div>
       </div>
 
-      <div class="footer__copy" data-nosnippet>
+      <div class="footer__copy">
         <p>© 2025 GameAssetFactory. All rights reserved.</p>
         <p>This website uses MiSans Fonts under the MiSans Fonts Intellectual Property License Agreement from Xiaomi Inc.</p>
         <p>Some portions of the underlying codebase are open-source and remain the property of their respective authors.</p>
